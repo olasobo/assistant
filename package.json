@@ -1,0 +1,25 @@
+{
+  "name": "assistant",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "start:dev": "node_modules/.bin/nodemon server.js"
+  },
+  "author": "Olatayo Sobomehin",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "4.0.0",
+    "express": "4.15.3"
+  },
+  "devDependencies": {
+    "eslint": "3.19.0",
+    "eslint-config-streetcode": "https://github.com/ofagbemi/eslint-config-streetcode.git#d0c294adbd1ecea01491adad44823b4b21ed9a46",
+    "nodemon": "^1.11.0"
+  },
+  "engines": {
+    "node": "8.0.0"
+  }
+}
