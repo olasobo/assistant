@@ -1,2 +1,4 @@
 .env
 node_modules/
+.DS_Store
+assistant-b8db22a2df8d.json
