@@ -19,7 +19,7 @@ function bufferToStream(buffer) {
 }
 
 router.get('/', (req, res) =>
-  res.json({ msg: 'hello' })
+  res.json({ message: 'Hello' })
 );
 
 const recognizeSpeech = (req, res, next) => {
@@ -34,22 +34,25 @@ const recognizeSpeech = (req, res, next) => {
   });
   googleStream.on('data', response => {
     req.speechGuess = response;
-    return next();
-  });
+  })
+  .on('error', err => next(err))
+  .on('finish', () => next());
   flacStream.pipe(googleStream);
 };
 
-const answerQuestion = async (req, res) => {
+const answerQuestion = async (req, res, next) => {
   if (req.speechGuess && req.speechGuess.results) {
     const transcript = req.speechGuess.results[0].alternatives[0].transcript;
     const mashapeResponse = await request({
+      json: true,
       url: getAnswerURL(transcript),
       headers: {
         'X-Mashape-Key': process.env.MASHAPE_KEY,
       },
     });
-    res.json(mashapeResponse);
+    return res.json(mashapeResponse);
   }
+  return next(new Error('There was an error'));
 };
 
 router.post('/', upload.single('audio'), recognizeSpeech, answerQuestion);
